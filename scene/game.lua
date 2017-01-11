@@ -18,6 +18,16 @@ local restart, back
 
 function math.clamp(val, min, max) return math.min(math.max(val, min), max) end
 
+local function offScreen(object)
+  local bounds = object.contentBounds
+  local sox, soy = display.screenOriginX, display.screenOriginY
+  if bounds.xMax < sox then return true end
+  if bounds.yMax < soy then return true end
+  if bounds.xMin > display.actualContentWidth - sox then return true end
+  if bounds.yMin > display.actualContentHeight - soy then return true end
+  return false
+end
+
 function scene:create( event )
 
   local sceneGroup = self.view -- add display objects to this group
@@ -44,7 +54,7 @@ function scene:create( event )
   sceneGroup:insert(world)
 
   -- make a hero
-  hero = display.newRect(world, 0, 0, 128, 128)
+  hero = display.newRect(world, 0, 0, 128, 128) -- create our hero object in our world
   hero = heroes.new(hero, "00272B")
 
   -- make a skateboard
@@ -108,8 +118,7 @@ function scene:create( event )
   score.y = display.screenOriginY + score.height / 2 + 8
 
   sceneGroup:insert(score)
-
-
+  
 end
 
 local worldScale = 1
@@ -158,12 +167,13 @@ local function enterFrame(event)
   -- if we are upside down then timeout to restart?
   if board.isUpsideDown then
     board.timeout = board.timeout + 1
-    if board.timeout > 120 and vx < 10 then
-      composer.gotoScene("scene.refresh")
+    if (board.timeout > 90) or offScreen(board) then
+			Runtime:removeEventListener("enterFrame", enterFrame)
+      composer.showOverlay("scene.hiscore", { isModal = true, effect = "fromTop",  params = { myScore = scene.score:get() }} )
     end
   else
     if board.pump and not board.inAir then
-      board:applyForce( 0.52, 0, board.x, board.y )
+      board:applyForce( 0.56, 0, board.x, board.y )
     end
     if board.level then
       board.rotation = board.rotation * 0.75 

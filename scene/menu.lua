@@ -6,7 +6,7 @@ local tiled = require( "com.ponywolf.ponytiled" )
 local json = require( "json" )
 
 -- Variables local to scene
-local ui, bgMusic, start
+local menu, bgMusic, ui
 
 -- Create a new Composer scene
 local scene = composer.newScene()
@@ -32,27 +32,30 @@ function scene:create( event )
 
 	-- Load our UI
 	local uiData = json.decodeFile( system.pathForFile( "scene/menu/ui/title.json", system.ResourceDirectory ) )
-	ui = tiled.new( uiData, "scene/menu/ui" )
-	ui.x, ui.y = display.contentCenterX - ui.designedWidth/2, display.contentCenterY - ui.designedHeight/2
+	menu = tiled.new( uiData, "scene/menu/ui" )
+	menu.x, menu.y = display.contentCenterX - menu.designedWidth/2, display.contentCenterY - menu.designedHeight/2
 
-	-- Find the start button
-	start = ui:findObject( "start" )
-	function start:tap()
-		fx.fadeOut( function()
-				composer.gotoScene( "scene.game", { params = {} } )
-			end )
-	end
-	fx.breath( start )
+	menu.extensions = "scene.menu.lib."
+	menu:extend("button", "label")
 
-	-- Find the help button
-	local help = ui:findObject( "help" )
-	function help:tap()
-		ui:findLayer( "help" ).isVisible = not ui:findLayer( "help" ).isVisible
+	function ui(event)
+		local phase = event.phase
+		local name = event.buttonName
+		print (phase, name)
+		if phase == "released" then 
+			if name == "start" then
+				fx.fadeOut( function()
+						composer.gotoScene( "scene.game", { params = {} } )
+					end )
+			elseif name == "help" then
+				menu:findLayer( "help" ).isVisible = not menu:findLayer( "help" ).isVisible
+			end
+		end
+		return true	
 	end
-	help:addEventListener( "tap" )
 
 	-- Transtion in logo
-	transition.from( ui:findObject( "logo" ), { xScale = 2.5, yScale = 2.5, time = 333, transition = easing.outQuad } )
+	transition.from( menu:findObject( "logo" ), { xScale = 2.5, yScale = 2.5, time = 333, transition = easing.outQuad } )
 
 	-- Add streaks
 	local streaks = fx.newStreak()
@@ -60,32 +63,24 @@ function scene:create( event )
 	streaks:toBack()
 	streaks.alpha = 0.1
 
-	sceneGroup:insert( ui )
+	sceneGroup:insert( menu )
 
 	-- escape key
 	Runtime:addEventListener("key", key)
 end
 
-local function enterFrame( event )
-
-	local elapsed = event.time
-
-end
-
 -- This function is called when scene comes fully on screen
 function scene:show( event )
-
 	local phase = event.phase
 	if ( phase == "will" ) then
 		fx.fadeIn()
-		-- add enterFrame listener
-		Runtime:addEventListener( "enterFrame", enterFrame )
 	elseif ( phase == "did" ) then
-		start:addEventListener( "tap" )
+		-- add UI listener
+		Runtime:addEventListener( "ui", ui)		
 		timer.performWithDelay( 10, function()
-			audio.play( bgMusic, { loops = -1, channel = 1 } )
-			audio.fade({ channel = 1, time = 333, volume = 1.0 } )
-		end)	
+				audio.play( bgMusic, { loops = -1, channel = 1 } )
+				audio.fade({ channel = 1, time = 333, volume = 1.0 } )
+			end)	
 	end
 end
 
@@ -94,10 +89,10 @@ function scene:hide( event )
 
 	local phase = event.phase
 	if ( phase == "will" ) then
-		start:removeEventListener( "tap" )
-		audio.fadeOut( { channel = 1, time = 1500 } )
+		-- remove UI listener
+		Runtime:removeEventListener( "ui", ui)		
 	elseif ( phase == "did" ) then
-		Runtime:removeEventListener( "enterFrame", enterFrame )
+		audio.fadeOut( { channel = 1, time = 1500 } )
 	end
 end
 

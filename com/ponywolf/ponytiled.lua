@@ -17,7 +17,7 @@ local function clearbit(x, p) return hasbit(x, p) and x - p or x end
 
 local function inherit(image, properties)
   for k,v in pairs(properties) do
-    image[k] = v
+    image[k] = v == "" and nil or v
   end
   return image
 end
@@ -236,11 +236,16 @@ function M.new(data, dir)
           local rect = display.newRect(objectGroup, 0, 0, object.width, object.height)
           rect.anchorX, rect.anchorY = 0, 0
           rect.x, rect.y = object.x, object.y
+          rect.rotation = object.rotation
+          rect.isVisible = object.visible
           centerAnchor(rect)
           -- simple physics
           if object.properties.bodyType then
             physics.addBody(rect, object.properties.bodyType, object.properties)
           end 
+          -- name and type
+          rect.name = object.name
+          rect.type = object.type              
           -- apply custom properties
           rect = inherit(rect, layer.properties)          
           rect = inherit(rect, object.properties)          

@@ -13,7 +13,6 @@ https://docs.coronalabs.com/api/library/composer/index.html
 -- ]]
 
 local composer = require "composer"
-local color = require "com.ponywolf.ponycolor"
 
 -- Removes status bar on iOS
 display.setStatusBar( display.HiddenStatusBar ) 
@@ -80,8 +79,8 @@ if isMobile or isSimulator then
 end
 
 -- go to menu screen
-composer.gotoScene( "scene.menu", { params={ } } )
+composer.gotoScene( "scene.game", { params={ } } )
 
--- or cheat to a specific level, just uncomment the next line and pass it 
--- the json file of the level you want to jump to
---composer.gotoScene( "scene.game", { params={ map = "scene/game/map/sandbox2.json"} } )
+-- delete hiscores
+--system.deletePreferences( "app", { "scores" } )
+

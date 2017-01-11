@@ -39,7 +39,7 @@
                  "type":"",
                  "visible":true,
                  "width":1007,
-                 "x":80,
+                 "x":96,
                  "y":832
                 }],
          "opacity":1,
@@ -60,7 +60,7 @@
                  "id":63,
                  "name":"logo",
                  "rotation":0,
-                 "type":"button",
+                 "type":"",
                  "visible":true,
                  "width":608,
                  "x":320,
@@ -83,24 +83,24 @@
                  "height":96,
                  "id":42,
                  "name":"help",
-                 "rotation":0,
+                 "rotation":3.76104424562648,
                  "type":"button",
                  "visible":true,
                  "width":320,
-                 "x":448,
-                 "y":627
+                 "x":445.196009628702,
+                 "y":616.401346488894
                 }, 
                 {
                  "gid":2,
                  "height":96,
                  "id":43,
                  "name":"start",
-                 "rotation":0,
+                 "rotation":2.22716726612386,
                  "type":"button",
                  "visible":true,
                  "width":320,
-                 "x":448,
-                 "y":484
+                 "x":446.255506202256,
+                 "y":477.745882744427
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -133,7 +133,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":65,
+ "nextobjectid":69,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tileheight":32,

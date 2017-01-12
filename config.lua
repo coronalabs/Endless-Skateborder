@@ -65,3 +65,4 @@ application = {
 	-- If you don't like this feature or if it doesn't fit your workflow, you can turn it off
 	--showRuntimeErrors = true,
 }
+

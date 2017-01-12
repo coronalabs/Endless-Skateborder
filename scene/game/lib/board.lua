@@ -75,7 +75,7 @@ function M.new(instance, boardColor)
         audio.play(scene.sounds.jump)
         instance.inAir = true
         instance.isJumping = true
-        instance:applyForce( 0, -11.5, instance.x, instance.y )
+        instance:applyForce( 0, -20.5, instance.x, instance.y )
       end
     elseif event.phase == "up" then 
       if event.keyName == "right" then

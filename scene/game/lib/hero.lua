@@ -3,10 +3,13 @@
 -- Our hero class
 
 local M = {}
+local composer = require "composer"
 
 local color = require "com.ponywolf.ponycolor"
 
 function M.new(instance, heroColor)
+
+  local scene = composer.getScene(composer.getSceneName("current"))
 
   local top = display.newImageRect(instance.parent, "scene/game/img/body.png", 128, 128) -- create a hero top
   local bottom = display.newImageRect(instance.parent, "scene/game/img/legs.png", 128, 128) -- create a hero bottom
@@ -17,7 +20,7 @@ function M.new(instance, heroColor)
   instance.isVisible = false
   physics.addBody(top, "kinematic", { radius = 48, isSensor = true }) -- collector for our coins
   top.isBoard = true -- make sure we pickup the pickups
-  
+
   local frame = 0
   function instance:animate(board, vx, vy)
     if vy < 0 then vy = 0 end
@@ -38,7 +41,9 @@ function M.new(instance, heroColor)
   end
 
   function instance:collision(event)
-    if event.other.isGround then
+    if event.other.isGround and self.linearDamping < 3.0 then
+      audio.play(scene.sounds.thud)
+      audio.play(scene.sounds.ouch)
       self.linearDamping = 3.0
     end
   end
@@ -46,6 +51,7 @@ function M.new(instance, heroColor)
   function instance:crash(vx, vy)
     if not self.wrecked then     
       self.wrecked = true
+      audio.play(scene.sounds.thud)
       physics.addBody(self, { bounce = 0, radius = 32, friction = 1 , filter= { groupIndex = -1 } } )
       self:setLinearVelocity(vx ,vy)
       transition.to (top, { rotation = 70, time = 666, transition = easing.outQuad })

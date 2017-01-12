@@ -24,6 +24,7 @@ function M.new(instance)
       transition.to( self, { alpha = 0, rotation = 90 + 45, xScale = 3, yScale = 3, time = 666, transition = easing.outQuad, 
           onComplete = remove
         })
+      audio.play(scene.sounds.coin)
     end
   end
 

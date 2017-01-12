@@ -25,6 +25,17 @@ function M.new(instance, boardColor)
     self.isUpsideDown = false  
   end
 
+  function instance:postCollision(event)
+    --print (event.force, event.other)
+    if event.force > 0.15 and not self.isUpsideDown then
+      if event.other.isRail then
+        audio.play(scene.sounds.grind)
+      else
+        audio.play(scene.sounds.land)
+      end
+    end
+  end
+
   function instance:collision(event)
     if event.phase == "began" then
       if event.other.isRail and not self.isUpsideDown then 
@@ -41,6 +52,7 @@ function M.new(instance, boardColor)
     elseif event.phase == "ended" then
       if event.other.isRail then
         self.isSparking = false
+        audio.play(scene.sounds.ride)
       end
       self.inAir = true
       --self.isJumping = true
@@ -48,6 +60,7 @@ function M.new(instance, boardColor)
   end
 
   instance:addEventListener("collision") 
+  instance:addEventListener("postCollision") 
 
   local lastEvent = {}
   local function key(event)
@@ -55,9 +68,11 @@ function M.new(instance, boardColor)
     if event.phase == "down" and instance and not instance.isUpsideDown then
       if event.keyName == "right" then 
         instance.pump = true
+        audio.play(scene.sounds.push)
       elseif event.keyName == "left" then 
         instance.level = true
       elseif (event.keyName == "space" or event.keyName:find("button")) and not instance.isJumping then 
+        audio.play(scene.sounds.jump)
         instance.inAir = true
         instance.isJumping = true
         instance:applyForce( 0, -11.5, instance.x, instance.y )

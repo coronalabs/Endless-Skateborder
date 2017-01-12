@@ -20,6 +20,7 @@ local scene = composer.newScene()
 
 function scene:create( event )
   local sceneGroup = self.view -- add display objects to this group
+  local parent = composer.getScene("scene.game")
 
   -- Load our highscore tiled map
   local uiData = json.decodeFile( system.pathForFile( "scene/menu/ui/highScore.json", system.ResourceDirectory ) )
@@ -34,6 +35,7 @@ function scene:create( event )
     print (phase, name)
     if phase == "released" then 
       if name == "restart" then
+				audio.play(parent.sounds.bail)		
         fx.fadeOut( function()
             composer.hideOverlay()
             composer.gotoScene( "scene.refresh", { params = {} } )

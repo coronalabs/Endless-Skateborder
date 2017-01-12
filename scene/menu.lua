@@ -29,6 +29,7 @@ function scene:create( event )
 
 	-- stream music
 	bgMusic = audio.loadStream( "scene/menu/sfx/titletheme.wav" )
+	local buttonSound = audio.loadSound( "scene/game/sfx/bail.wav" )
 
 	-- Load our UI
 	local uiData = json.decodeFile( system.pathForFile( "scene/menu/ui/title.json", system.ResourceDirectory ) )
@@ -42,7 +43,8 @@ function scene:create( event )
 		local phase = event.phase
 		local name = event.buttonName
 		print (phase, name)
-		if phase == "released" then 
+		if phase == "released" then
+			audio.play(buttonSound)
 			if name == "start" then
 				fx.fadeOut( function()
 						composer.gotoScene( "scene.game", { params = {} } )
@@ -78,7 +80,7 @@ function scene:show( event )
 		-- add UI listener
 		Runtime:addEventListener( "ui", ui)		
 		timer.performWithDelay( 10, function()
-				audio.play( bgMusic, { loops = -1, channel = 1 } )
+				audio.play( bgMusic, { loops = -1, channel = 2 } )
 				audio.fade({ channel = 1, time = 333, volume = 1.0 } )
 			end)	
 	end
@@ -92,7 +94,7 @@ function scene:hide( event )
 		-- remove UI listener
 		Runtime:removeEventListener( "ui", ui)		
 	elseif ( phase == "did" ) then
-		audio.fadeOut( { channel = 1, time = 1500 } )
+		audio.fadeOut( { channel = 2, time = 1500 } )
 	end
 end
 

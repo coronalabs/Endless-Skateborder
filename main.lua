@@ -24,6 +24,9 @@ else
   native.setProperty( "androidSystemUiVisibility", "immersiveSticky" ) 
 end
 
+-- reserve audio for menu, bgsound, and wheels
+audio.reserveChannels(3)
+
 -- are we running on a simulator?
 local isSimulator = "simulator" == system.getInfo( "environment" )
 local isMobile = ("ios" == system.getInfo("platform")) or ("android" == system.getInfo("platform"))
@@ -79,8 +82,8 @@ if isMobile or isSimulator then
 end
 
 -- go to menu screen
-composer.gotoScene( "scene.game", { params={ } } )
+composer.gotoScene( "scene.menu", { params={ } } )
 
--- delete hiscores
+-- uncomment to delete hiscores
 --system.deletePreferences( "app", { "scores" } )
 

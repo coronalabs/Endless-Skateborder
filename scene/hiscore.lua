@@ -9,7 +9,7 @@ local hiscore, scores, ui
 local function splitNum(line, separator)
   separator = separator or ","
   local items = {}
-  for str in string.gmatch(line, "([^"..separator.."]+)") do
+  for str in string.gmatch(line or "", "([^"..separator.."]+)") do
     items[#items+1] = tonumber(str or "0")
   end
   return items

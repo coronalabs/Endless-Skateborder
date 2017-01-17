@@ -32,7 +32,7 @@ function scene:create( event )
   function ui(event)
     local phase = event.phase
     local name = event.buttonName
-    print (phase, name)
+    --print (phase, name)
     if phase == "released" then 
       if name == "restart" then
 				audio.play(parent.sounds.bail)		
@@ -56,12 +56,9 @@ function scene:show( event )
     -- refesh scores
     scores = system.getPreference( "app", "scores", "string" )
     scores = splitNum(scores)
-    print (scores[1],scores[2],scores[3],scores[4])    
     -- update in UI
     scores[4] = params.myScore -- add my score into the mix
-    print (scores[1],scores[2],scores[3],scores[4])    
     table.sort(scores, function(a, b) return tonumber(a) > tonumber(b) end) -- sort the scores
-    print (scores[1],scores[2],scores[3],scores[4])
     for i = 1, 3 do -- take the top three
       hiscore:findObject("score"..i).text = scores[i]-- put them in the UI
     end

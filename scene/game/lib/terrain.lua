@@ -48,7 +48,7 @@ function M.new(world, buildings, x, y, flat, groundColor, buildingColor)
 
   -- build the ground physics
   local ground = display.newLine(x, y, x + run, y + drop)
-  physics.addBody(ground, "static", { chain={ 0, 0, run, drop }, fricion = 1.5 })
+  physics.addBody(ground, "static", { chain={ 0, 0, run, drop }, friction = 1.5 })
   instance.run, instance.drop = run, drop
   ground.strokeWidth = 6
   ground:setStrokeColor(color.hex2rgb(groundColor))
@@ -69,7 +69,7 @@ function M.new(world, buildings, x, y, flat, groundColor, buildingColor)
   local rail
   if math.random(5) == 1 and run > 0 and not flat then
     rail = display.newLine(x, y, x, y-96, x + run - 6, y + drop-96, x + run - 6, y + drop)
-    physics.addBody(rail, "static", { chain={ 0, -96, run, drop-96 }, fricion = 0.0, bounce = 0 })
+    physics.addBody(rail, "static", { chain={ 0, -96, run, drop-96 }, friction = 0.0, bounce = 0 })
     rail.strokeWidth = 12
     rail:setStrokeColor(color.hex2rgb(groundColor))
     rail.isRail = true

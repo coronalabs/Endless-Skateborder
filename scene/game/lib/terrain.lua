@@ -48,7 +48,7 @@ function M.new(world, buildings, x, y, flat, groundColor, buildingColor)
 
   -- build the ground physics
   local ground = display.newLine(x, y, x + run, y + drop)
-  physics.addBody(ground, "static", { chain={ 0, 0, run, drop }, friction = 1.5 })
+  physics.addBody(ground, "static", { chain={ 0, 0, run, drop }, friction = 0.0015 })
   instance.run, instance.drop = run, drop
   ground.strokeWidth = 6
   ground:setStrokeColor(color.hex2rgb(groundColor))

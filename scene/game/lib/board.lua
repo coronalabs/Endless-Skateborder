@@ -64,6 +64,7 @@ function M.new(instance, boardColor)
 
   local lastEvent = {}
   local function key(event)
+    --print(event.phase, event.keyName)
     if ( event.phase == lastEvent.phase ) and ( event.keyName == lastEvent.keyName ) then return false end  -- Filter repeating keys
     if event.phase == "down" and instance and not instance.isUpsideDown then
       if event.keyName == "right" then 

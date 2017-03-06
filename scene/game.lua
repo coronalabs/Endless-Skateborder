@@ -235,6 +235,7 @@ local function enterFrame(event)
 	local hx, hy = hero:localToContent(0,0)
 	hx, hy = display.contentCenterX/2 - hx, display.contentCenterY - hy
 	world.x, world.y = world.x + hx, world.y + hy
+	
 end  
 
 function scene:show( event )

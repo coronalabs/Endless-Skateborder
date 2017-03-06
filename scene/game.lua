@@ -36,16 +36,16 @@ function scene:create( event )
 
 	local sndDir = "scene/game/sfx/"
 	scene.sounds = {
-		bail = audio.loadSound( sndDir .. "bail.wav" ),
-		jump = audio.loadSound( sndDir .. "jump.wav" ),
-		land = audio.loadSound( sndDir .. "land.wav" ),
-		grind = audio.loadSound( sndDir .. "grind.wav" ),
-		push = audio.loadSound( sndDir .. "push.wav" ),
-		ride = audio.loadSound( sndDir .. "ride.wav" ),
-		coin = audio.loadSound( sndDir .. "coin.wav" ),  
-		thud = audio.loadSound( sndDir .. "thud.wav" ),  
-		ouch = audio.loadSound( sndDir .. "ouch.wav" ),  
-		city = audio.loadSound( sndDir .. "loops/city.wav" ),			
+		bail = audio.loadSound( sndDir .. "bail.mp3" ),
+		jump = audio.loadSound( sndDir .. "jump.mp3" ),
+		land = audio.loadSound( sndDir .. "land.mp3" ),
+		grind = audio.loadSound( sndDir .. "grind.mp3" ),
+		push = audio.loadSound( sndDir .. "push.mp3" ),
+		ride = audio.loadSound( sndDir .. "ride.mp3" ),
+		coin = audio.loadSound( sndDir .. "coin.mp3" ),  
+		thud = audio.loadSound( sndDir .. "thud.mp3" ),  
+		ouch = audio.loadSound( sndDir .. "ouch.mp3" ),  
+		city = audio.loadSound( sndDir .. "loops/city.mp3" ),			
 	}
 
 	-- build a random background
